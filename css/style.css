@@ -1,0 +1,263 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Theme 1 */
+    --backGround-main: hsl(224, 26%, 31%);
+    --display: hsl(224, 35%, 15%);
+    --display-color: hsl(0, 0%, 100%);
+    --toggle: hsl(225, 31%, 21%);
+    --backGrond-calc: hsl(225, 30%, 21%);
+    --bg-del: hsl(224, 21%, 50%);
+    --bg-del-color: hsl(0, 0%, 100%);
+    --bg-del-hover: hsl(224, 51%, 76%);
+    --bg-keys: hsl(32, 26%, 89%);
+    --keys-shadow: hsl(27, 16%, 64%);
+    --bg-keys-hover: hsl(0, 0%, 100%);
+    --bg-red: hsl(6, 64%, 50%);
+    --bg-red-shdow: hsl(25, 97%, 27%);
+    --bg-red-hover: hsl(0, 93%, 67%);
+    --number-color: hsl(217, 13%, 31%);
+}
+
+body.white-theme {
+    --backGround-main: hsl(0, 0%, 90%);
+    --display: hsl(0, 0%, 93%);
+    --display-color: hsl(60, 7%, 22%);
+    --toggle: hsl(0, 6%, 82%);    
+    --backGrond-calc: hsl(0, 6%, 82%);
+    --bg-del: hsl(185, 41%, 37%);
+    --bg-del-color: hsl(0, 0%, 100%);
+    --bg-del-hover: hsl(185, 41%, 56%);
+    --bg-keys: hsl(48, 9%, 89%);
+    --keys-shadow: hsl(358, 12%, 61%);
+    --bg-keys-hover: hsl(0, 0%, 100%);
+    --bg-red: hsl(25, 99%, 39%);
+    --bg-red-shdow: hsl(25, 97%, 27%);
+    --bg-red-hover: hsl(25, 100%, 61%);
+    --number-color: hsl(60, 7%, 22%);
+}
+
+body.black-theme {    
+    --backGround-main: hsl(268, 75%, 9%);
+    --display: hsl(268, 71%, 12%);
+    --display-color: hsl(50, 97%, 61%);
+    --toggle: hsl(268, 71%, 12%);
+    --toggle-circle:hsl(176, 100%, 46%);
+    --backGrond-calc: hsl(268, 71%, 12%);
+    --bg-del: hsl(281, 89%, 26%);
+    --bg-del-color: hsl(0, 0%, 100%);
+    --bg-del-hover: hsl(280, 56%, 44%);
+    --bg-keys: hsl(269, 48%, 20%);
+    --keys-shadow: hsl(289, 71%, 36%);
+    --bg-keys-hover: hsl(305, 56%, 46%);
+    --bg-red: hsl(185, 100%, 47%);
+    --bg-red-hover: hsl(177, 100%, 79%);
+    --bg-red-shdow: hsl(176, 90%, 70%);
+    --number-color: hsl(50, 97%, 61%);
+}
+
+.league-spartan-bold {
+    font-family: "League Spartan", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+}
+
+body {
+    background: var(--backGround-main);
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.toggle {
+    position: relative;
+    height: 30px;
+    width: 70px;
+    background-color: var(--display);
+    border-radius: 32px;
+    display: flex;
+}
+
+.switch-label {
+    font-weight: bold;
+    position: relative;
+    z-index: 2;
+    float: left;
+    width: 70px;
+    line-height: 32px;
+    font-size: 12px;
+    font-size: 0;
+    color: #676a6c;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .switch-input {
+    display: none;
+  }
+
+  .switch-input:checked + .switch-label {
+    color: #FFF;
+    transition: 0.15s ease-out;
+    transition-property: color, text-shadow;
+  }
+  
+  .switch-input:checked + .switch-label-y ~ .switch-selector {
+    transform: translateX(0%);
+    background-color: var(--bg-red);
+  }
+  .switch-input:checked + .switch-label-i ~ .switch-selector {
+    transform: translateX(100%);
+    background-color: var(--bg-red);
+  }
+  .switch-input:checked + .switch-label-n ~ .switch-selector {
+    transform: translateX(200%);
+    background-color: var(--bg-red);
+  }
+
+  .switch-selector {
+    position: absolute;
+    z-index: 1;
+    top: 5px;
+    left: 5px;
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #1ab394;
+    transition: all 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  }
+
+.caluclator {
+    margin-top: 95px;
+}
+
+.caluclator__title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.caluclator__logo {
+    color: var(--display-color);
+    font-size: 26px;
+}
+
+.position {
+    color: var(--display-color);
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 15px;
+    margin: 0 10px 8px 0;
+}
+
+.caluclator__toggle {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.caluclator__toggle-name {
+    text-transform: uppercase;
+    font-size: 20px;
+    color: var(--display-color);
+}
+
+#display {
+    width: 100%;
+    height: 130px;
+    background-color: var(--display);
+    color: var(--display-color);
+    font-size: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 35px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+}
+
+.keys {
+    background-color: var(--backGrond-calc);
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: repeat(5, 60px);
+    column-gap: 15px;
+    row-gap: 30px;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.keys button {
+    background-color: var(--bg-keys);
+    color: var(--number-color);
+    border: none;
+    border-radius: 10px;
+    text-transform: uppercase;
+    font-size: 30px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0px 6px 0px 0px var(--keys-shadow);
+    transition: all .5s ease-in-out;
+}
+
+.keys button:hover {
+    background-color: var(--bg-keys-hover);
+}
+
+.keys .long {
+    grid-column: 1 / 3;
+}
+
+.keys .color-red {
+    grid-column: 3 / 5;
+    background-color: var(--bg-red);
+    color: var(--bg-keys);
+    box-shadow: 0px 6px 0px 0px var(--bg-red-shdow);
+    transition: all .5s ease-in-out;
+}
+
+.keys .color-red:hover {
+    background-color: var(--bg-red-hover);
+}
+
+.keys .color-del,
+.keys .color-rezet {
+    color: var(--bg-del-color);
+    background-color: var(--bg-del);
+    box-shadow: 0px 6px 0px 0px var(--bg-del-hover);
+    transition: all .5s ease-in-out;
+}
+
+.keys .color-del:hover,
+.keys .color-rezet:hover {
+    background-color: var(--bg-del-hover);
+}
+
+.keys .multiply {
+    font-size: 20px;
+    /* text-transform: lowercase; */
+}
+
+.attribution {
+    font-size: 11px;
+    text-align: center;
+    font-style: italic;
+    color: var(--bg-keys);
+}
+
+.attribution a {
+    color: hsl(228, 45%, 44%);
+}
