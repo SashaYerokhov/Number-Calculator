@@ -40,26 +40,29 @@
       </div>
     </div>
     <!-- цифрам и точке - были добавленны класс key -->
-    <div id="display">399,981</div>
+    <div id="display">
+        <div id="prev-operand"></div>
+        <div id="cur-operand"></div>
+    </div>
     <div id="keys" class="keys league-spartan-bold">
-      <button class="key number_kye" value="7">7</button>
-      <button class="key number_kye" value="8">8</button>
-      <button class="key number_kye" value="9">9</button>
-      <button class="key color-del">DEL</button>
-      <button class="key number_kye" value="4">4</button>
-      <button class="key number_kye" value="5">5</button>
-      <button class="key number_kye" value="6">6</button>
-      <button class="key operator__btn">+</button>
-      <button class="key number_kye" value="3">3</button>
-      <button class="key number_kye" value="2">2</button>
-      <button class="key number_kye" value="1">1</button>
-      <button class="key operator__btn">-</button>
-      <button class="key number_kye">.</button>
-      <button class="key number_kye" value="0">0</button>
-      <button class="key operator__btn">/</button>
-      <button class="key operator__btn">X</button>
-      <button class="key color-rezet long">Reset</button>
-      <button class="key color-red">=</button>
+      <button class="key number_kye" id="number-7">7</button>
+      <button class="key number_kye" id="number-8">8</button>
+      <button class="key number_kye" id="number-9">9</button>
+      <button class="key color-del" id="del">DEL</button>
+      <button class="key number_kye" id="number-4">4</button>
+      <button class="key number_kye" id="number-5">5</button>
+      <button class="key number_kye" id="number-6">6</button>
+      <button class="key operator__btn" id="plus">+</button>
+      <button class="key number_kye" id="number-3">3</button>
+      <button class="key number_kye" id="number-2">2</button>
+      <button class="key number_kye" id="number-1">1</button>
+      <button class="key operator__btn" id="minus">-</button>
+      <button class="key number_kye" id="dot">.</button>
+      <button class="key number_kye" id="number-0">0</button>
+      <button class="key operator__btn" id="divide">/</button>
+      <button class="key operator__btn" id="multiply">*</button>
+      <button class="key color-rezet long" id="reset">Reset</button>
+      <button class="key color-red" id="equals">=</button>
     </div>
   </section>
   

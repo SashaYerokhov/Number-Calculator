@@ -29,66 +29,142 @@ toggls.forEach((toggle, index) => {
  * пеменные для экрана дисплея
  */
 
-const keys = document.querySelectorAll('.key');
-// console.log(keys);
+const calculator = document.querySelector(".calculator");
+const displayCur = document.querySelector("#cur-operand");
+const displayPrev = document.querySelector("#prev-operand");
+const numberKye = document.querySelectorAll(".number_kye");
+const operatorBtn = document.querySelectorAll(".operator__btn");
+const delButtons = document.getElementById("del");
+const dotButtons = document.getElementById("dot");
+const resetButtons = document.getElementById("reset");
+const equalsButtons = document.getElementById("equals");
 
-const operators = document.querySelectorAll('.operator__btn');
-const display = document.querySelector('#display');
-// console.log(display.innerText);
-const del = document.querySelector('.color-del');
-
-const reset = document.querySelector('.color-rezet');
-// console.log(reset); 
-
-// точка ввыдиться больше одного раза, а нужно только один раз
-keys.forEach((key) => {
-    key.addEventListener('click', function(event) {
-        if (display.innerText === '0' && event.target.innerText !== '.') {
-            display.innerText = event.target.innerText;
-        } else {
-            display.innerText += event.target.innerText;
-        }
-            })
-})
-
-// удаление одного символа
-del.addEventListener('click', (event) => {
-    delNumber();
+numberKye.forEach((key) => {
+  key.addEventListener("click", () => {
+    appendNumber(key.innerText);
+    updateDisplay();
+  });
 });
-function delNumber() {
-    display.innerText = display.innerText.slice (0, -1);
-         if(display.innerText === '') {
-            display.innerText = '0'
-                }
+
+operatorBtn.forEach((button) => {
+  button.addEventListener("click", () => {
+    chooseOperation(button.innerText);
+    updateDisplay();
+  });
+});
+
+delButtons.addEventListener("click", deleteNumber);
+resetButtons.addEventListener("click", reset);
+equalsButtons.addEventListener("click", compute);
+dotButtons.addEventListener("click", appendDot);
+
+// Эти функции должны быть определены для выполнения соответствующих действий, которые включают очистку дисплея, удаление последнего ввода, вычисление результата и добавление десятичной точки.
+
+function appendDot() {
+  if (curOperand.includes(".")) return;
+  //
+  if (curOperand === "") curOperand = "0";
+  //
+  curOperand += ".";
+  updateDisplay();
 }
 
-// очистка дисплея от данных
-reset.addEventListener('click', (event) => {
-    clearDisplay();
-});
-function clearDisplay() {
-    display.textContent = '0';
-   
+let curOperand = "";
+let prevOperand = "";
+let operation = null;
+let displayHasInitialValue = true; // Флаг, что на дисплее начальное значение
+
+function appendNumber(key) {
+  // Если на дисплее начальное значение (или после =), очищаем его
+  if (displayHasInitialValue) {
+    curOperand = "";
+    displayHasInitialValue = false;
+  }
+  if (key === "." && curOperand.includes(".")) return;
+  curOperand += key;
+  updateDisplay();
 }
 
+// function appendNumber(key) {
+//   if (key === "." && curOperand.includes(".")) return;
+//   // предотвратить множественные десятичные знаки
+//   curOperand = curOperand.toString() + key.toString();
+// }
+// В этой функции мы конкатенируем щелкнутое число с текущим операндом. Мы также проверяем, чтобы не добавить более одной десятичной точки.
 
-// buttons.forEach((button) => {
-//     button.addEventListener('click', function(event) {
-//         switch (event.target.innerText) {
-//             case 'RESET':
-//                 display.innerText = '0';
-//                 break;
-//             case 'DEL':
-//                 display.innerText = display.innerText.slice(0, -1);
-//                 if(display.innerText === '') {
-//                     display.innerText = '0'
-//                 }
-//                 break;        
-//             default:
-//                          display.innerText === '0' && event.target.innerText !== '.'
-//                         ? (display.innerText = event.target.innerText)
-//                         : (display.innerText += event.target.innerText)
-//                 break;
-//         }
-//     })
-// })
+// Когда пользователь нажимает на кнопку операции, нам нужно установить выбранную операцию и при необходимости переместить текущий операнд на предыдущий. Вот функция chooseOperation:
+function chooseOperation(selectedOperation) {
+  if (curOperand === "") return;
+  if (prevOperand !== "") {
+    compute();
+  }
+  operation = selectedOperation;
+  prevOperand = curOperand;
+  curOperand = "";
+  isNewCalculation = false;
+}
+// Эта функция устанавливает операцию, перемещает CurrentOperand в PreviousOperand и очищает CurrentOperand для следующего ввода. Она также вызывает compute, если операция уже находится в процессе выполнения, что позволяет выполнять операции в цепочке.
+
+// Функция compute выполняет вычисления на основе выбранной операции и операндов:
+
+function compute() {
+  let computation;
+  const prev = parseFloat(prevOperand);
+  const current = parseFloat(curOperand);
+  if (isNaN(prev) || isNaN(current)) return;
+
+  switch (operation) {
+    case "+":
+      computation = prev + current;
+      break;
+    case "-":
+      computation = prev - current;
+      break;
+    case "*":
+      computation = prev * current;
+      break;
+    case "/":
+      computation = prev / current;
+      break;
+    default:
+      return;
+  }
+ // Округляем до 10 знаков, затем убираем лишние нули (например, 0.3000000000 → 0.3)
+  computation = parseFloat(computation.toFixed(10)); // Округляет и убирает лишние нули
+  curOperand = computation.toString();
+  operation = undefined;
+  prevOperand = "";
+  displayHasInitialValue = true; // Устанавливаем флаг, что вычисление завершено
+  updateDisplay();
+  // Обновите дисплей с новым состоянием
+}
+// Эта функция преобразует операнды в числа, выполняет вычисления на основе операции и обновляет currentOperand результатом.
+
+// Чтобы отразить изменения на дисплее, нам нужно обновить функцию updateDisplay, упомянутую в шаге 4:
+
+function updateDisplay() {
+  document.getElementById("cur-operand").innerText = curOperand;
+  document.getElementById("prev-operand").innerText =
+    prevOperand + "" + (operation || "");
+}
+// This function updates the calculator's display with the current and previous operands, and shows the chosen operation next to the previous operand.
+
+function reset() {
+  curOperand = "";
+  prevOperand = "";
+  operation = null;
+  displayHasInitialValue = true;
+  updateDisplay();
+}
+// Когда нажимается кнопка очистки (AC), запускается эта функция, которая сбрасывает CurrentOperand, PreviousOperand и Operation, а затем обновляет дисплей.
+
+// Функция deleteNumber удаляет последнюю цифру из текущего операнда, предоставляя пользователям возможность исправить ошибки:
+function deleteNumber() {
+  curOperand = curOperand.toString().slice(0, -1);
+  updateDisplay();
+}
+
+// Нам нужен способ обрабатывать нажатия на кнопки с цифрами и добавлять нажатое число к текущему отображению. Вот как мы можем реализовать функцию appendNumber, о которой мы говорили в шаге 4:
+
+// https://hackr.io/blog/how-to-build-a-javascript-calculator
+// Доделать работу калькулятора с клавиатуры
